@@ -11,3 +11,7 @@ url: "https://www.effectiveratecpm.com/xdaf0bsq4?key=a78a9a2f59016d594e4774f295d
 duration: 5  # Duration in minutes to visit the URL
 
 discord_webhook_url: "discord://1249221380491186276/6d2llfGXypQ7hsCBzaiZq4rX7LirwK98X6vRrewv8_NyQ9ypujss4Tj0ysCgJVzXpSH1"  # Add your Discord webhook URL here
+
+logging:
+  level: DEBUG  # Set logging level to DEBUG
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
