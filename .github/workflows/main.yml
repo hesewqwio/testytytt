@@ -7,20 +7,26 @@ jobs:
   run-automation:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      actions: write
+    
     steps:
+      - name: Debug Time
+        run: date
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
-      - name: Install dependencies
+      - name: Copy all files to runner's home directory
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          mkdir -p $HOME/app
+          cp -r * $HOME/app/
+          ls -al $HOME/app  # List files to verify copy
 
-      - name: Run browser automation
+      - name: Make entryone.sh executable
+        run: chmod +x $HOME/app/entryone.sh
+
+      - name: Run Browser Automation Script
         run: |
-          python main.py
+          bash $HOME/app/entryone.sh
