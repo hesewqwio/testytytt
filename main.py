@@ -9,7 +9,8 @@ from src import Browser, Searches
 from src.utils import CONFIG, sendNotification, getProjectRoot
 
 def setupLogging():
-    _format = CONFIG.logging.format
+    _format = CONFIG['logging']['format']
+    _level = CONFIG['logging']['level']
     terminalHandler = logging.StreamHandler(sys.stdout)
     terminalHandler.setFormatter(logging.Formatter(_format))
 
@@ -23,7 +24,7 @@ def setupLogging():
         }
     )
     logging.basicConfig(
-        level=logging.getLevelName(CONFIG.logging.level.upper()),
+        level=logging.getLevelName(_level.upper()),
         format=_format,
         handlers=[
             handlers.TimedRotatingFileHandler(
@@ -47,9 +48,9 @@ def main():
 
     search_type = CONFIG['search']['type']
     
-    for account in CONFIG.accounts:
+    for account in CONFIG['accounts']:
         try:
-            logging.info(f"Starting searches for {account.email}")
+            logging.info(f"Starting searches for {account['email']}")
 
             if search_type in ("desktop", "both"):
                 logging.info("Performing desktop searches...")
