@@ -17,6 +17,9 @@ class Config(dict):
                 return cls()
             return cls(yamlContents)
 
+    def __getattr__(self, item):
+        return self[item]
+
 def getProjectRoot() -> Path:
     return Path(__file__).parent.parent
 
