@@ -21,6 +21,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run browser automation
-        run: |
-          python main.py
+      - name: Make entryone.sh executable
+        run: chmod +x entryone.sh
+
+      - name: Run Browser Automation Script
+        run: ./entryone.sh
