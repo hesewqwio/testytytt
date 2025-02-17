@@ -31,6 +31,7 @@ class Browser:
         self.localeLang, self.localeGeo = self.getLanguageCountry()
         self.userDataDir = self.setupProfiles()
         self.browserConfig = getBrowserConfig(self.userDataDir)
+        self.proxy = CONFIG.browser.proxy
         (
             self.userAgent,
             self.userAgentMetadata,
@@ -82,6 +83,13 @@ class Browser:
         options.page_load_strategy = "eager"
 
         seleniumwireOptions: dict[str, Any] = {"verify_ssl": False}
+
+        if self.proxy:
+            seleniumwireOptions["proxy"] = {
+                "http": self.proxy,
+                "https": self.proxy,
+                "no_proxy": "localhost,127.0.0.1",
+            }
 
         driver = None
 
