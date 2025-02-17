@@ -2,6 +2,7 @@ import yaml
 from pathlib import Path
 from typing import Any, Self
 import json
+import requests
 
 class Config(dict):
     @classmethod
@@ -28,5 +29,10 @@ def saveBrowserConfig(sessionPath: Path, config: dict) -> None:
     configFile = sessionPath / "config.json"
     with open(configFile, "w") as f:
         json.dump(config, f)
+
+def makeRequestsSession() -> requests.Session:
+    session = requests.Session()
+    session.headers.update({"User-Agent": "Mozilla/5.0"})
+    return session
 
 CONFIG = Config.fromYaml(getProjectRoot() / "config.yaml")
