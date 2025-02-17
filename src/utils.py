@@ -15,7 +15,17 @@ class Config(dict):
             yamlContents = yaml.safe_load(f)
             if not yamlContents:
                 return cls()
-            return cls(yamlContents)
+            return cls._convertDictToConfig(yamlContents)
+
+    @classmethod
+    def _convertDictToConfig(cls, data: dict) -> Self:
+        config = cls()
+        for key, value in data.items():
+            if isinstance(value, dict):
+                config[key] = cls._convertDictToConfig(value)
+            else:
+                config[key] = value
+        return config
 
     def __getattr__(self, item):
         return self[item]
