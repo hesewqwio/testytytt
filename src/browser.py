@@ -7,6 +7,7 @@ from pathlib import Path
 from time import sleep
 from typing import Any, Type, Union
 from urllib.parse import urlparse
+from types import TracebackType  # Add this import
 
 import ipapi
 import pycountry
