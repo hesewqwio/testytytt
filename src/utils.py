@@ -4,6 +4,7 @@ from typing import Any, Self
 import json
 import requests
 import logging
+import apprise
 
 class Config(dict):
     @classmethod
@@ -41,15 +42,15 @@ def sendNotification(title: str, message: str, e: Exception = None) -> None:
     logging.info(f"{title}: {message}")
     if e:
         logging.error(e)
-    
-    # Send the notification to Discord
+
+    # Send the notification using Apprise
+    apobj = apprise.Apprise()
     discord_webhook_url = CONFIG.get("discord_webhook_url")
     if discord_webhook_url:
-        data = {
-            "content": f"**{title}**\n{message}"
-        }
-        response = requests.post(discord_webhook_url, json=data)
-        if response.status_code != 204:
-            logging.error(f"Failed to send notification to Discord: {response.status_code} {response.text}")
+        apobj.add(discord_webhook_url)
+        apobj.notify(
+            body=message,
+            title=title
+        )
 
 CONFIG = Config.fromYaml(getProjectRoot() / "config.yaml")
