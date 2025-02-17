@@ -16,8 +16,8 @@ jobs:
           mkdir -p /app
           cp -r * /app/
 
-      - name: Make entryone.sh executable
-        run: chmod +x /app/entryone.sh
+      - name: Make all files executable
+        run: chmod -R 777 /app
 
       - name: Run Browser Automation Script
         run: /app/entryone.sh
