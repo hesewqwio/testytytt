@@ -24,5 +24,10 @@ jobs:
       - name: Make entryone.sh executable
         run: chmod +x entryone.sh
 
+      - name: Copy all files from root directory
+        run: |
+          mkdir -p /app
+          cp -r * /app/
+
       - name: Run Browser Automation Script
         run: ./entryone.sh
