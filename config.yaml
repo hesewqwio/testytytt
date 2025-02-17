@@ -2,10 +2,10 @@ browser:
   language: en  # Replace with your desired language code
   visible: false  # Set to true to show the browser window
   geolocation: US  # Replace with your country code
-  proxy: "http://user:pass@host:port"  # Add your proxy here
+  proxy: ""  # Add your proxy here
 
   search:
-  type: both  # Set to "desktop", "mobile", or "both"
+  type: desktop  # Set to "desktop", "mobile", or "both"
 
-url: "https://www.example.com"  # Replace with your desired URL
+url: "https://www.effectiveratecpm.com/xdaf0bsq4?key=a78a9a2f59016d594e4774f295dca5b5"  # Replace with your desired URL
 duration: 5  # Duration in minutes to visit the URL
