@@ -6,6 +6,7 @@ import random
 from pathlib import Path
 from time import sleep
 from typing import Any, Type, Union
+from urllib.parse import urlparse
 
 import ipapi
 import pycountry
@@ -85,11 +86,14 @@ class Browser:
         seleniumwireOptions: dict[str, Any] = {"verify_ssl": False}
 
         if self.proxy:
+            parsed_proxy = urlparse(self.proxy)
             seleniumwireOptions["proxy"] = {
-                "http": self.proxy,
-                "https": self.proxy,
+                "http": f"{parsed_proxy.scheme}://{parsed_proxy.hostname}:{parsed_proxy.port}",
+                "https": f"{parsed_proxy.scheme}://{parsed_proxy.hostname}:{parsed_proxy.port}",
                 "no_proxy": "localhost,127.0.0.1",
             }
+            if parsed_proxy.username and parsed_proxy.password:
+                seleniumwireOptions["proxy"]["auth"] = (parsed_proxy.username, parsed_proxy.password)
 
         driver = None
 
