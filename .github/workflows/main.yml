@@ -23,4 +23,4 @@ jobs:
 
       - name: Run browser automation
         run: |
-          bash entryone.sh
+          python main.py
