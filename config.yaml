@@ -4,7 +4,7 @@ browser:
   geolocation: US  # Replace with your country code
   proxy: ""  # Add your proxy here
 
-  search:
+search:
   type: desktop  # Set to "desktop", "mobile", or "both"
 
 url: "https://www.effectiveratecpm.com/xdaf0bsq4?key=a78a9a2f59016d594e4774f295dca5b5"  # Replace with your desired URL
