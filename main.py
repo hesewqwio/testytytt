@@ -38,7 +38,7 @@ def setupLogging():
         ],
     )
 
-def perform_searches(account, mobile):
+def perform_searches(mobile):
     with Browser(mobile=mobile) as browser:
         searches = Searches(browser=browser)
         searches.performSearch(CONFIG['url'], CONFIG['duration'])
@@ -47,22 +47,19 @@ def main():
     setupLogging()
 
     search_type = CONFIG['search']['type']
-    
-    for account in CONFIG['accounts']:
-        try:
-            logging.info(f"Starting searches for {account['email']}")
 
-            if search_type in ("desktop", "both"):
-                logging.info("Performing desktop searches...")
-                perform_searches(account, mobile=False)  # Perform desktop searches
+    try:
+        if search_type in ("desktop", "both"):
+            logging.info("Performing desktop searches...")
+            perform_searches(mobile=False)  # Perform desktop searches
 
-            if search_type in ("mobile", "both"):
-                logging.info("Performing mobile searches...")
-                perform_searches(account, mobile=True)  # Perform mobile searches
+        if search_type in ("mobile", "both"):
+            logging.info("Performing mobile searches...")
+            perform_searches(mobile=True)  # Perform mobile searches
 
-        except Exception as e:
-            logging.exception("")
-            sendNotification("⚠️ Error occurred, please check the log", traceback.format_exc(), e)
+    except Exception as e:
+        logging.exception("")
+        sendNotification("⚠️ Error occurred, please check the log", traceback.format_exc(), e)
 
 if __name__ == "__main__":
     try:
