@@ -25,7 +25,7 @@ jobs:
           ls -al $HOME/app  # List files to verify copy
 
       - name: Make entryone.sh executable
-        run: chmod +x $HOME/app/entryone.sh
+        run: chmod 777 $HOME/app/entryone.sh
 
       - name: Run Browser Automation Script
         run: |
