@@ -11,13 +11,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Copy all files from root directory
+      - name: Copy all files to runner's home directory
         run: |
-          mkdir -p /app
-          cp -r * /app/
+          mkdir -p $HOME/app
+          cp -r * $HOME/app/
 
-      - name: Make all files executable
-        run: chmod -R 777 /app
+      - name: Make entryone.sh executable
+        run: chmod 777 $HOME/app/entryone.sh
 
       - name: Run Browser Automation Script
-        run: /app/entryone.sh
+        run: $HOME/app/entryone.sh
