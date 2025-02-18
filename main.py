@@ -7,6 +7,11 @@ from datetime import datetime
 
 from src import Browser, Searches
 from src.utils import CONFIG, sendNotification, getProjectRoot
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+from time import sleep
 
 def setupLogging():
     _format = CONFIG['logging']['format']
@@ -40,8 +45,38 @@ def setupLogging():
 
 def perform_searches(mobile):
     with Browser(mobile=mobile) as browser:
+        if CONFIG['youtube']['enabled'] and "youtube.com" in CONFIG['url']:
+            browser.webdriver.get("https://www.youtube.com")
+            browser.load_cookies(service_name="youtube")
+            browser.webdriver.refresh()
+            sleep(5)  # Wait for the page to load with cookies
+
         searches = Searches(browser=browser)
         searches.performSearch(CONFIG['url'], CONFIG['duration'])
+
+        if CONFIG['youtube']['enabled'] and "youtube.com" in CONFIG['url']:
+            watch_youtube_video(browser, CONFIG['duration'])
+            browser.save_cookies(service_name="youtube")
+
+def watch_youtube_video(browser, duration):
+    wait = WebDriverWait(browser.webdriver, 10)
+    play_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[aria-label='Play (k)']")))
+    play_button.click()
+    logging.info(f"Watching YouTube video for {duration} minutes.")
+
+    end_time = time.time() + duration * 60  # Calculate the end time
+    while time.time() < end_time:
+        try:
+            # Detect and click the "Skip Ad" button if it appears
+            ad_skip_button = browser.webdriver.find_element(By.CLASS_NAME, "ytp-ad-skip-button")
+            if ad_skip_button.is_displayed():
+                ad_skip_button.click()
+                logging.info("Skipped an ad.")
+        except:
+            pass
+        sleep(5)  # Check for the skip button every 5 seconds
+
+    logging.info("Finished watching the video.")
 
 def main():
     setupLogging()
