@@ -1,17 +1,24 @@
 browser:
-  language: en  # Replace with your desired language code
-  visible: false  # Set to true to show the browser window
-  geolocation: US  # Replace with your country code
-  proxy: ""  # Add your proxy here
+  language: en
+  visible: true
+  geolocation: US
+  proxy: ""
 
 search:
-  type: desktop  # Set to "desktop", "mobile", or "both"
+  type: desktop
 
-url: "https://www.effectiveratecpm.com/xdaf0bsq4?key=a78a9a2f59016d594e4774f295dca5b5"  # Replace with your desired URL
-duration: 5  # Duration in minutes to visit the URL
+urls:
+  - name: youtube
+    url: "https://www.youtube.com/watch?v=example_video_id"  # Replace with your desired YouTube URL
+    duration: 5
+    youtube: true  # Enable YouTube-specific functionality
+  - name: example
+    url: "https://www.example.com"
+    duration: 3
+    youtube: false  # Disable YouTube-specific functionality
 
-discord_webhook_url: "discord://1249221380491186276/6d2llfGXypQ7hsCBzaiZq4rX7LirwK98X6vRrewv8_NyQ9ypujss4Tj0ysCgJVzXpSH1"  # Add your Discord webhook URL here
+discord_webhook_url: "discord://your_discord_webhook_url"
 
 logging:
-  level: DEBUG  # Set logging level to DEBUG
+  level: DEBUG
   format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
