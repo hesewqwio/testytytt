@@ -199,22 +199,22 @@ class Searches:
             del self.googleTrendsShelf[rootTerm]
             self.googleTrendsShelf[rootTerm] = None
 
-        # Wait for 15 seconds before scrolling and opening the first result
+        # Wait for 15 seconds before opening the first result
         sleep(15)
 
-        # Scroll through the search results page to mimic human behavior
-        for _ in range(15):
-            self.webdriver.find_element(By.TAG_NAME, "body").send_keys(Keys.PAGE_DOWN)
-            sleep(1)
-
-        # Open the first search result
+        # Open the first search result in a new tab
         first_result = WebDriverWait(self.webdriver, 10).until(
             expected_conditions.element_to_be_clickable((By.CSS_SELECTOR, "h2 a"))
         )
-        first_result.click()
+        first_result.send_keys(Keys.CONTROL + Keys.RETURN)  # Opens link in new tab
+        self.webdriver.switch_to.window(self.webdriver.window_handles[-1])
 
         # Stay on the first search result page for 120 seconds
         sleep(120)
+
+        # Close the new tab and switch back to the original search page
+        self.webdriver.close()
+        self.webdriver.switch_to.window(self.webdriver.window_handles[0])
 
         # Ensure delay after each root term search
         sleep(randint(220, 280))
@@ -233,22 +233,22 @@ class Searches:
                     searchCount += 1
                     logging.info(f"[BING] {searchCount} searches completed (including additional terms)")
 
-                    # Wait for 15 seconds before scrolling and opening the first result
+                    # Wait for 15 seconds before opening the first result
                     sleep(15)
 
-                    # Scroll through the search results page to mimic human behavior
-                    for _ in range(15):
-                        self.webdriver.find_element(By.TAG_NAME, "body").send_keys(Keys.PAGE_DOWN)
-                        sleep(1)
-
-                    # Open the first search result
+                    # Open the first search result in a new tab
                     first_result = WebDriverWait(self.webdriver, 10).until(
                         expected_conditions.element_to_be_clickable((By.CSS_SELECTOR, "h2 a"))
                     )
-                    first_result.click()
+                    first_result.send_keys(Keys.CONTROL + Keys.RETURN)  # Opens link in new tab
+                    self.webdriver.switch_to.window(self.webdriver.window_handles[-1])
 
                     # Stay on the first search result page for 120 seconds
                     sleep(120)
+
+                    # Close the new tab and switch back to the original search page
+                    self.webdriver.close()
+                    self.webdriver.switch_to.window(self.webdriver.window_handles[0])
 
                     # Ensure delay between each related term search
                     sleep(randint(220, 280))
