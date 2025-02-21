@@ -242,7 +242,7 @@ class Searches:
                         sleep(1)
 
                     # Open the first search result
-                   first_result = WebDriverWait(self.webdriver, 10).until(
+                    first_result = WebDriverWait(self.webdriver, 10).until(
                         expected_conditions.element_to_be_clickable((By.CSS_SELECTOR, "h2 a"))
                     )
                     first_result.click()
